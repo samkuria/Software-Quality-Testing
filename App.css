@@ -451,3 +451,15 @@ h2 {
 .activity-date { font-weight: bold; color: var(--secondary-blue); min-width: 150px; }
 .activity-time { color: var(--text-gray); min-width: 100px; }
 .activity-desc { color: #e74c3c; font-weight: 500; }
+
+.empty-state {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-gray);
+}
+
+.empty-state .sub-text {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 5px;
+}
