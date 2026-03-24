@@ -1,0 +1,110 @@
+/* MediAI Global Theme */
+:root {
+  --primary-teal: #4db6ac;
+  --secondary-blue: #2c3e50;
+  --soft-background: #f0f4f8;
+  --white: #ffffff;
+  --text-gray: #546e7a;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  background-color: var(--soft-background);
+  color: var(--secondary-blue);
+}
+
+/* Center Wrapper (HCI: Minimalist Design) */
+.auth-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* The Card (MediAI Standard) */
+.auth-container {
+  background: var(--white);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--secondary-blue);
+}
+
+.auth-container p {
+  color: var(--text-gray);
+  margin-bottom: 32px;
+}
+
+/* Input Fields (HCI: Affordance) */
+.input-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--secondary-blue);
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box; /* Crucial for width alignment */
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary-teal);
+}
+
+/* Buttons (HCI: Visibility/Feedback) */
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary-teal);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #3d968e;
+  transform: translateY(-2px);
+}
+
+/* Links */
+.auth-link {
+  margin-top: 24px;
+  font-size: 0.95rem;
+}
+
+.auth-link span {
+  color: var(--primary-teal);
+  font-weight: 600;
+  text-decoration: none;
+}
