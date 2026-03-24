@@ -108,3 +108,64 @@ h2 {
   font-weight: 600;
   text-decoration: none;
 }
+
+/* Social Login Styles */
+.social-login-separator {
+  margin: 20px 0;
+  position: relative;
+  text-align: center;
+}
+
+.social-login-separator::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #eee;
+  z-index: 1;
+}
+
+.social-login-separator span {
+  background: white;
+  padding: 0 10px;
+  position: relative;
+  z-index: 2;
+  font-size: 0.85rem;
+  color: var(--text-gray);
+}
+
+.social-icons-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.social-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.social-btn:hover { background: #f9f9f9; }
+
+/* Terms Styles */
+.terms-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.terms-container span {
+  color: var(--primary-teal);
+  font-weight: 600;
+}
