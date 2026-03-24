@@ -1,57 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function SignupFormCard({ onSubmit, onGoToLogin }) {
+  // 1. State for Form Data
+  const [formData, setFormData] = useState({
+    name: '', email: '', phone: '', password: ''
+  });
+  const [agreed, setAgreed] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+
+  // 2. Handle Input Changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // 3. Validation Logic (The "Gatekeeper")
+  const isFormValid = 
+    formData.name && 
+    formData.email && 
+    formData.phone && 
+    formData.password.length >= 6 && 
+    agreed;
+
+  // 4. Social Login Handlers
+  const handleSocialLogin = (platform) => {
+    alert(`Redirecting to ${platform} OAuth...`);
+    // In a real app, window.location.href = `api/auth/${platform}`
+  };
+
   return (
-    <div className="login-card-form">
-      <form onSubmit={onSubmit}>
-        
-        {/* Basic Info */}
+    <div className="signup-container">
+      <form onSubmit={(e) => { e.preventDefault(); if(isFormValid) onSubmit(formData); }}>
         <div className="input-group">
           <label>Full Name</label>
-          <input type="text" placeholder="John Doe" required />
+          <input name="name" type="text" onChange={handleChange} required />
         </div>
-
         <div className="input-group">
-          <label>Email Address</label>
-          <input type="email" placeholder="name@company.com" required />
+          <label>Email</label>
+          <input name="email" type="email" onChange={handleChange} required />
         </div>
-
         <div className="input-group">
-          <label>Phone Number</label>
-          <input type="tel" placeholder="+254 7..." required />
+          <label>Phone</label>
+          <input name="phone" type="tel" onChange={handleChange} required />
         </div>
-
         <div className="input-group">
           <label>Password</label>
-          <input type="password" placeholder="••••••••" required />
+          <input name="password" type="password" onChange={handleChange} required />
         </div>
 
-        {/* Social Logins - HCI: Recognition over Recall */}
-        <div className="social-login-separator">
-          <span>Or sign up with</span>
-        </div>
-
+        <div className="social-login-separator"><span>Or sign up with</span></div>
         <div className="social-icons-container">
-          <button type="button" className="social-btn google">Google</button>
-          <button type="button" className="social-btn facebook">Facebook</button>
-          <button type="button" className="social-btn linkedin">LinkedIn</button>
+          {['Google', 'Facebook', 'LinkedIn'].map(p => (
+            <button key={p} type="button" className="social-btn" onClick={() => handleSocialLogin(p)}>{p}</button>
+          ))}
         </div>
 
-        {/* Terms and Conditions - HCI: Constraints */}
         <div className="terms-container">
-          <input type="checkbox" id="terms" required />
-          <label htmlFor="terms"> I agree to the <span>Terms & Conditions</span></label>
+          <input type="checkbox" checked={agreed} onChange={() => setAgreed(!agreed)} id="terms" />
+          <label htmlFor="terms">
+            I agree to the <span onClick={() => setShowTerms(true)} style={{cursor:'pointer', color:'var(--primary-teal)'}}>Terms & Conditions</span>
+          </label>
         </div>
 
-        <button type="submit" className="login-btn">Create Account</button>
-
-        <p className="auth-link">
-          Already have an account? 
-          <span onClick={onGoToLogin} style={{ cursor: 'pointer', marginLeft: '5px' }}>
-            Login
-          </span>
-        </p>
+        <button type="submit" className="login-btn" disabled={!isFormValid} style={{ opacity: isFormValid ? 1 : 0.5 }}>
+          Create Account
+        </button>
       </form>
+
+      {/* Terms Modal (HCI: Feedback/Overlay) */}
+      {showTerms && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Terms & Conditions</h3>
+            <p>1. Your health data is encrypted.<br/>2. We do not sell your vitals.<br/>3. Use this for tracking, not medical diagnosis.</p>
+            <button onClick={() => setShowTerms(false)} className="login-btn">Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
