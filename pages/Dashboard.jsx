@@ -82,7 +82,7 @@ function DashboardPage({ onLogout }) {
           </button>
         </nav>
         <button className="delete-acc-btn" onClick={handleDeleteAccount}>
-          Delete Account & Sign Out
+          Delete Account
         </button>
       </div>
 
