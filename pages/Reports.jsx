@@ -1,28 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import ReportsUI from '../components/Reports';
+import { auth, db } from '../firebaseConfig';
+import { ref, onValue } from "firebase/database";
+import '../App.css';
 
 function ReportsPage() {
-  // Mocking the data flow - SQA: This allows UI testing before backend is ready
-  const [dailyData] = useState([
-    { time: '08:00', temp: 36.5, heartRate: 72 },
-    { time: '10:00', temp: 37.1, heartRate: 85 },
-    { time: '12:00', temp: 38.2, heartRate: 110 },
-    { time: '14:00', temp: 37.5, heartRate: 95 },
-    { time: '16:00', temp: 36.8, heartRate: 78 },
-  ]);
+  // Initialize with Empty Arrays for a "Clean Slate"
+  const [dailyData, setDailyData] = useState([]);
+  const [weeklyData, setWeeklyData] = useState([]);
+  const [alerts, setAlerts] = useState([]);
 
-  const [weeklyData] = useState([
-    { day: 'Mon', avgTemp: 36.6, avgHR: 75 },
-    { day: 'Tue', avgTemp: 37.0, avgHR: 80 },
-    { day: 'Wed', avgTemp: 36.4, avgHR: 72 },
-    { day: 'Thu', avgTemp: 37.8, avgHR: 92 },
-    { day: 'Fri', avgTemp: 36.7, avgHR: 74 },
-  ]);
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      // SQA: This listener will automatically update the charts 
+      // the moment your IoT device pushes new data to these nodes.
+      const historyRef = ref(db, `users/${user.uid}/history`);
+      
+      const unsubscribe = onValue(historyRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          // If data exists, we map it to our state
+          setDailyData(data.daily || []);
+          setWeeklyData(data.weekly || []);
+          setAlerts(data.alerts || []);
+        } else {
+          // If no data (New User), keep it empty
+          setDailyData([]);
+          setWeeklyData([]);
+          setAlerts([]);
+        }
+      });
 
-  const [alerts] = useState([
-    { date: 'Mar 24', time: '12:05 PM', message: 'High Heart Rate (110 BPM)' },
-    { date: 'Mar 23', time: '09:15 AM', message: 'High Temp Alert (38.2°C)' }
-  ]);
+      return () => unsubscribe();
+    }
+  }, []);
 
   return (
     <div className="reports-page-container">
