@@ -1,22 +1,40 @@
 import React from 'react';
-import LoginFormCard from '../components/LoginForm'; // Ensure this path is correct
+import LoginFormCard from '../components/LoginForm';
+import { auth } from '../firebaseConfig';
+import { signInWithEmailAndPassword } from "firebase/auth";
 import '../App.css'; // Importing the CSS for styling
 
 function LoginForm({ onNavigate }) {
   
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login submitted!");
-    onNavigate('dashboard'); // This triggers the view change in App.jsx
+  const handleLoginSubmit = async (email, password) => {
+    try {
+      // 1. Firebase Authentication Call
+      await signInWithEmailAndPassword(auth, email, password);
+      
+      // 2. Success Feedback
+      alert("Login Successful! Welcome back.");
+      onNavigate('dashboard');
+
+    } catch (error) {
+      // 3. SQA: Specific Error Handling
+      console.error("Login Error Code:", error.code);
+      
+      // Firebase often returns 'auth/invalid-credential' for both wrong email/pass 
+      // for security reasons (so hackers don't know which one is right).
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+        alert("Invalid Email or Password. Please try again.");
+      } else {
+        alert("An error occurred: " + error.message);
+      }
+    }
   };
 
   return (
     <div className="auth-page-wrapper">
       <div className="auth-container">
-        <h2 style={{ marginBottom: '10px' }}>Health Tracker Login</h2>
-        <p style={{ marginBottom: '30px', color: '#666' }}>Securely access your vitals</p>
+        <h2>Health Tracker Login</h2>
+        <p>Enter your credentials to access your vitals</p>
         
-        {/* If this line is missing or broken, the card will be blank */}
         <LoginFormCard 
           onSubmit={handleLoginSubmit} 
           onGoToSignup={() => onNavigate('signup')} 
