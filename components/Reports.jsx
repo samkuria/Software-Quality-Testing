@@ -53,12 +53,13 @@ function ReportsUI({ dailyData, weeklyData, alerts }) {
               </div>
             ))
           ) : (
-            <p style={{color: '#999', padding: '10px'}}>No alarming events recorded.</p>
+            <div className="empty-state">
+                <p>No alarming events recorded yet.</p>
+                <p className="sub-text">Waiting for IoT sensor synchronization...</p>
+            </div>
           )}
         </div>
       </div>
     </div>
   );
 }
-
-export default ReportsUI;
