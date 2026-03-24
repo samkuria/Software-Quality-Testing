@@ -354,3 +354,50 @@ h2 {
   background: #e74c3c;
   color: white;
 }
+
+/* Layout & Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Keeps things balanced */
+  padding: 10px 20px;
+  background: var(--secondary-blue);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between Hamburger and Title */
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.hamburger:hover {
+  transform: scale(1.1);
+}
+
+.header-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.header-spacer {
+  flex-grow: 1;
+}
