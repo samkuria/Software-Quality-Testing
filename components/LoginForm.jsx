@@ -1,32 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function LoginFormCard({ onSubmit, onGoToSignup }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Pass the local state back to the Page component
+    onSubmit(email, password);
+  };
+
   return (
-    <form className="login-card-form" onSubmit={onSubmit}>
-      <div className="input-group">
-        <label>Username</label>
-        <input type="text" name="username" placeholder="Enter username" required />
-      </div>
+    <div className="login-card-form">
+      <form onSubmit={handleSubmit}>
+        
+        <div className="input-group">
+          <label htmlFor="email">Email Address</label>
+          <input 
+            type="email" 
+            id="email"
+            placeholder="example@email.com" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required 
+          />
+        </div>
 
-      <div className="input-group" style={{ marginTop: '15px' }}>
-        <label>Password</label>
-        <input type="password" name="password" placeholder="••••••••" required />
-      </div>
+        <div className="input-group">
+          <label htmlFor="password">Password</label>
+          <input 
+            type="password" 
+            id="password"
+            placeholder="••••••••" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required 
+          />
+        </div>
 
-      <button type="submit" className="login-btn" style={{ marginTop: '20px' }}>
-        Login
-      </button>
+        <button type="submit" className="login-btn">
+          Login
+        </button>
 
-      <p style={{ marginTop: '20px', fontSize: '0.9rem' }}>
-        Don't have an account? 
-        <span 
-          onClick={onGoToSignup} 
-          style={{ color: '#3498db', cursor: 'pointer', marginLeft: '5px', fontWeight: 'bold' }}
-        >
-          Create one
-        </span>
-      </p>
-    </form>
+        <p className="auth-link">
+          Don't have an account? 
+          <span 
+            onClick={onGoToSignup} 
+            className="link-span"
+            style={{ cursor: 'pointer', marginLeft: '5px', fontWeight: 'bold' }}
+          >
+            Create one
+          </span>
+        </p>
+      </form>
+    </div>
   );
 }
 
