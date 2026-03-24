@@ -3,7 +3,7 @@ import { auth, db } from '../firebaseConfig';
 import { ref, onValue } from "firebase/database";
 import { deleteUser } from "firebase/auth"; // For account deletion
 import DashboardUI from '../components/Dashboard';
- // Assuming you have this file
+import Reports from '../components/Reports';
 import '../App.css'; // Importing the CSS for styling
 
 function DashboardPage({ onLogout }) {
